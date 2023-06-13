@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+
+  <style>
+
+    .form-registration {
+      max-width: 330px;
+      padding: 15px;
+      margin: 0 auto;
+    }
+    p {
+      display: block;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<div class="container">
+  <form class="form-registration" th:method="POST" th:action="@{/}" th:object="${user}">
+    <h2 class="form-registration-heading">Зарегестрироваться</h2>
+    <p>
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" name="username" class="form-control" th:field="*{username}" th:value="*{getUsername()}" id="username" placeholder="Username"/>
+    </p>
+    <p>
+      <label for="email" class="sr-only">E-mail</label>
+      <input type="email" name="email" class="form-control" th:field="*{email}" th:value="*{getEmail()}" id="email" placeholder="E-mail"/>
+    </p>
+    <p>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" class="form-control" th:field="*{password}" th:value="*{getPassword()}" id="password" placeholder="Password"/>
+    </p>
+    <p>
+
+        <select name="roles" class="form-control">
+          <option value="" disabled selected>--Please choose an option--</option>
+          <option
+                  th:each="role : ${allRoles}"
+                  th:text="${role.name}"
+                  th:value="${role.id}"
+                  th:field="*{roles}"
+          />
+        </select>
+
+
+    </p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Регистарция</button>
+  </form>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить пользователя</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+
+  <label for="name">Изменить username</label>
+  <input type="text" th:field="*{username}" th:value="*{getUsername()}" id="name"/>
+  <br>
+
+  <label for="surname">Изменить email</label>
+  <input type="text" th:field="*{email}" th:value="*{getEmail()}" id="surname"/>
+  <br>
+
+  <label for="password">Изменить passworddd</label>
+  <input type="password" th:field="*{password}" th:value="*{getPassword()}" id="password">
+  <br>
+
+  <p>
+    <label>Roles:
+      <select name="roles" multiple size="2">
+        <option
+                th:each="role : ${allRoles}"
+                th:text="${role.name}"
+                th:value="${role.id}"
+                th:field="*{roles}"
+        />
+      </select>
+    </label>
+  </p>
+
+  <input type="submit" value="Edit"/>
+    <br>
+    <hr>
+    <a href="allUsers"><button>Вернуться</button></a>
+    <div th:insert="index :: copy"></div>
+
+</form>
+
+</body>
+</html>

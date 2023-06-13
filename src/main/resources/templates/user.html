@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Моя старница</title>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand" th:text="${user.username} + ' with roles: ' + ${user.roles}"></span>
+
+    <div class="form-inline my-2 my-lg-0">
+        <div th:insert="index :: copy" sec:authorize="${isAuthenticated()}">
+            <b><a href="/logout" class="link-secondary text-white-50">Выйти</a></b>
+        </div>
+    </div>
+</nav>
+
+<div class="row no-gutters">
+    <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block sidebar collapse">
+        <div class="position-sticky pt-3">
+            <div sec:authorize="${isAuthenticated()}">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">MAIN PAGE</a>
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" aria-current="page" href="/admin">Admin</a>
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasAnyRole('ADMIN', 'USER')">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-md-10 bg-light">
+        <div>
+            <div class="container-fluid">
+                <h1></h1>
+                <h1>User information-page</h1>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="panel panel-default active">
+                            <div class="panel-body">
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item h5">About user</li>
+                                    <li class="list-group-item">
+                                <table class="table table-light table-striped">
+                                    <thead>
+
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Roles</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${user.getId()}"/>
+                                        <td th:text="${user.getUsername()}"/>
+                                        <td th:text="${user.getPassword()}"/>
+                                        <td th:text="${user.getEmail()}"/>
+                                        <td th:text="${user.getRoles()}"/>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
